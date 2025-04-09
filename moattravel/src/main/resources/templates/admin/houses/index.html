@@ -18,16 +18,17 @@
 							
 							<h1 class="mb-4 text-center">民宿一覧</h1>
 							
-							<div class="d-flex justify-content-end">
-								<div class="d-flex justify-content-between align-items-end flex-wrap">
-									<form method="get" th:action="@{/admin/houses}" class="mb-3">
-										<div class="input-group">
-											<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="民宿名">
-											<button type="submit" class="btn text-white shadow-sm moattravel-btn">検索</button> 
-										</div>
-									</form>
-									<a th:href="@{/admin/houses/register}" class="btn text-white shadow-sm mb-3 moattravel-btn">登録</a>
-								</div>
+							<div class="d-flex justify-content-between align-items-end flex-wrap">
+								<form method="get" th:action="@{/admin/houses}" class="mb-3">
+									<div class="input-group">
+										<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="民宿名">
+										<button type="submit" class="btn text-white shadow-sm moattravel-btn">検索</button> 
+									</div>
+								</form>
+								<a th:href="@{/admin/houses/register}" class="btn text-white shadow-sm mb-3 moattravel-btn">登録</a>
+							</div>
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
 							</div>
 							
 							<table class="table">
@@ -39,6 +40,7 @@
 										<th scope="col">住所</th>
 										<th scope="col">電話番号</th>
 										<th scope="col"></th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -48,7 +50,24 @@
 										<td th:text="${house.getPostalCode()}"></td>
 										<td th:text="${house.getAddress()}"></td>
 										<td th:text="${house.getPhoneNumber()}"></td>
-										<td><a th:href="@{/admin/houses/__${house.getId()}__}">詳細</a></td> 
+										<td><a th:href="@{/admin/houses/__${house.getId()}__}">詳細</a></td>
+										<td><a href="#" class="moattravel-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteHouseModal' + house.getId()}">削除</a></td>
+										<!-- 削除用モーダル -->
+										<div class="modal fade" th:id="${'deleteHouseModal' + house.getId()}" taubindex="-1" th:aria-labelledby="${'deleteHouseModalLabel' + house.getId()}">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" th:id="${'deleteHouseModalLabel' + house.getId()}" th:text="${house.getName() + 'を削除してもよろしいですか？'}"></h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+													</div>
+													<div class="modal-footer">
+														<form method="post"th:action="@{/admin/houses/__${house.getId()}__/delete}">
+															<button type="submit" class="btn moattravel-btn-danger text-white shadow-sm">削除</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
 									</tr>
 								</tbody>
 							</table>
