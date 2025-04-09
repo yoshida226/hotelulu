@@ -51,11 +51,23 @@ footer {
 	opacity: 0.8;
 }
 
+.moattravel-page-link {
+	color: #5196a6;
+}
+
+.moattravel-active {
+	background-color: #5196a6 !important;
+	border-color: #5196a6 !important;
+}
+
+.moattravel-pre-wrap {
+	/* 改行文字で行を折り返す */
+	white-space: pre-wrap;
+}
+
 @media screen and (min-width: 1400px) {
 	.moattravel-container {
 		max-width: 1200px;
 	}
 }
-
-
 
